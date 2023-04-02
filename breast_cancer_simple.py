@@ -18,3 +18,12 @@ classifier.add(Dense(units = 1, activation = 'sigmoid'))
 classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['binary_accuracy'])
 classifier.fit(training_predictors, training_class, batch_size=10, epochs=100)
 
+predictions = classifier.predict(test_predictors)
+predictions = (predictions > 0.5)
+
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+precision = accuracy_score(test_class, predictions)
+matriz = confusion_matrix(test_class, predictions)
+
+
