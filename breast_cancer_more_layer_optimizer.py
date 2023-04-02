@@ -13,9 +13,14 @@ from keras.layers import Dense
 classifier = Sequential()
 classifier.add(Dense(units = 16, activation = 'relu', 
                      kernel_initializer = 'random_uniform', input_dim = 30))
+classifier.add(Dense(units = 16, activation = 'relu', 
+                     kernel_initializer = 'random_uniform'))
 classifier.add(Dense(units = 1, activation = 'sigmoid'))
 
-classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['binary_accuracy'])
+optimizer = keras.optimizers.Adam(learning_rate = 0.001, decay=0.0001, clipvalue=0.5)
+classifier.compile(optimizer = optimizer, loss = 'binary_crossentropy', metrics = ['binary_accuracy'])
+
+# classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['binary_accuracy'])
 classifier.fit(training_predictors, training_class, batch_size=10, epochs=100)
 
 predictions = classifier.predict(test_predictors)
